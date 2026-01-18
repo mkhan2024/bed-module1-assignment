@@ -1,0 +1,16 @@
+name: Run Tests and Lint # name of workflow
+
+on: [push, pull_request] # when to run
+
+jobs:
+  build: # job name
+    runs-on: ubuntu-latest # os
+    steps:
+      - uses: actions/checkout@v2 # checks out code
+      - name: Set up Node.js # step name
+        uses: actions/setup-node@v2 # sets up node
+        with:
+          node-version: '18' # node version
+      - run: npm install # installs packages
+      - run: npx eslint . # runs lint
+      - run: npm test # runs tests
