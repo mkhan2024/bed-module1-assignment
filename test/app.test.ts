@@ -10,3 +10,17 @@ describe('Health Check Endpoint', () => { // groups tests
     expect(res.body.status).toBe('OK'); // checks body
   });
 });
+
+describe('Portfolio Performance Endpoint', () => { // groups tests
+  it('should return performance data', async () => {
+    const res = await request.get('/api/v1/portfolio/performance?initialInvestment=10000&currentValue=12000');
+    expect(res.status).toBe(200);
+    expect(res.body.percentageChange).toBe(20);
+  });
+
+  it('should return 400 for invalid input', async () => { // edge case test
+    const res = await request.get('/api/v1/portfolio/performance?initialInvestment=0&currentValue=12000');
+    expect(res.status).toBe(400);
+    expect(res.body.error).toBeDefined();
+  });
+});
